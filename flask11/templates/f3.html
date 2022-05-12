@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebCourse</title>
+    <!-- bootstrap CSS -->
+    <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">菜鸟教程</a>
+        </div>
+        <div>
+          <ul class="nav navbar-nav">
+            <li class="active">
+              <a href="#">iOS</a>
+            </li>
+            <li>
+              <a href="#">SVN</a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Java</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="#">jmeter</a>
+                </li>
+                <li>
+                  <a href="#">EJB</a>
+                </li>
+                <li>
+                  <a href="#">Jasper Report</a>
+                </li>
+                <li>
+                  <a href="#">分离的链接</a>
+                </li>
+                <li>
+                  <a href="#">另一个分离的链接</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+    <h1>Hello, world!</h1>
+    <div class="row">
+      <div class="col-md-6 col-lg-4"
+      style="background-color: #dedef8; box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">button-default</button>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+        eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      </div>
+      <div class="col-md-6 col-lg-8"
+      style="background-color: #dedef8; box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
+        modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+      </div>
+    </div>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="btn-group">
+			  <button type="button" class="btn btn-primary" onclick="test1()">b1</button>
+			  <button type="button" class="btn btn-primary" onclick="test2()">b2</button>
+			  <button type="button" class="btn btn-primary">b3</button>
+			</div>
+			
+		</div>
+		<div class="col-sm-6">
+			<p id='p1'>1</p> 
+			<p id='p2'>2</p>
+			<p>3</p>
+			<p>4</p>
+			<p>5</p>
+		</div>      
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-6">31
+			<div class="btn-group">
+			  <button type="button" class="btn btn-primary" onclick="change('/img/mbg.jpg')">mbg</button>
+			  <button type="button" class="btn btn-primary">Samsung</button>
+			  <button type="button" class="btn btn-primary">Sony</button>
+			</div>
+			
+		</div>
+		<div class="col-sm-6">32
+			<img id='img1' src="/img/laoying.jpg" width='200' height='200'/>
+		</div>      
+	</div>
+	
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">模态框（Modal）标题</h4>
+          </div>
+          <div class="modal-body">模态框（Modal）内容</div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> 
+          <button type="button" class="btn btn-primary">提交</button></div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- bootstrap js -->
+    <script src="bootstrap-3.3.5-dist/js/jquery.min.js"></script> 
+    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script> 
+    <script src="iceking-utils-jquery.js"></script> 
+    <script src="sweetalert.min.js"></script> 
+    
+	<!-- <script src="js/f3.js"></script></div> -->
+
+	<script>
+      jqu.loadJs('/js/f3.js');
+    </script>
+	<!-- 	<script>
+      jqu.loadJs('/js/f3.js');
+    </script> -->
+  </body>
+</html>

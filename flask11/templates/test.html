@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Title Here</title>
+</head>
+<body style="font-size:12px;">
+
+<!-- 
+
+html本身的注释 ,注释会传递给历览器
+
+-->
+
+<!-- 这是注释文字 -->
+
+<p>整数：{{a1}}</p>
+
+{% if a1>0 %}
+<p>大于0的</p>
+{% endif %}
+
+<p>浮点数四舍五入：{{b | round}}</p>
+
+<p>字符串：{{c | upper}}</p>
+
+<p>列表d的长度：{{d | length}}</p>
+
+{% for x in d %}
+<p>元素：{{x}}</p>
+{% endfor %}
+
+<p>字典：{{e.code}}</p>
+<p>字典：{{e['name']}}</p>
+<p>字典：{{e.age}}</p>
+
+</body>
+</html>

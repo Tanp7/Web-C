@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WebCourse</title>
+	<!-- bootstrap CSS -->
+	<link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<form id="form_search" class="form-inline" role="form" method="post" action="/ztest_list_ljf">
+			  <div class="form-group">
+				<label>关键字</label>
+				<input type="text" class="form-control" name="kw" 
+				placeholder="请输入名称" value="{{dm.kw}}">
+			  </div>
+			 
+			  <button type="button" class="btn btn-default" onclick="search()">查询</button>
+			  <button type="button" class="btn btn-default" onclick="presave(0)">new</button>
+			</form>
+			
+		</div>      
+	</div>
+	
+   <div class="row">
+ 
+      <div class="col-md-6 col-lg-4"  style="background-color: #dedef8; 
+         box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+         <p>11
+		 {% if dm.total>0 %}
+		 <table class="table table-striped">
+		   <caption>数据库中ztest表</caption>
+		   <thead>
+			 <tr>
+			   <th>编号</th>
+			   <th>名字</th>
+			   <th>年龄</th>
+			   <th>工资</th>
+			 </tr>
+		   </thead>
+		   <tbody>
+			{% for row in dm.rows %}
+			 <tr>
+			   <td>{{row[1]}}</td>
+			   <td>{{row[2]}}</td>
+			   <td>{{row[3]}}</td>
+			   <td>{{row[4]}}</td>
+			   <td>
+					<a href="javascript:;" onclick="remove({{row[0]}})"><i class="fa fa-remove"></i>delete</a>
+				</td>
+			 </tr>
+			{% endfor %}
+		   </tbody>
+		 </table>
+		
+		{% else %}
+		<h3> 查询无结果 </h3>
+		{% endif %}
+         </p>
+      </div>
+ 
+      <div class="col-md-6 col-lg-8" style="background-color: #dedef8;
+         box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+         <p>12
+         </p>
+ 
+		</div>
+	</div>
+	</div>
+	
+  <!-- 模态框（Modal）新增/修改ztest -->
+  <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog">
+		  <div class="modal-content">
+			  <div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				  <h4 class="modal-title" >ztest</h4>
+			  </div>
+			  <div class="modal-body">
+				  
+				  <form role="form" id="form_am">
+					<div class="form-group">
+					  <label>code</label>
+					  <input type="text" class="form-control" name="code" placeholder="请输入编号">
+					</div>
+					
+					<div class="form-group">
+					  <label>name</label>
+					  <input type="text" class="form-control" name="name" placeholder="请输入名称">
+					</div>
+					
+					<div class="form-group">
+					  <label>age</label>
+					  <input type="integer" class="form-control" name="age" placeholder="请输入学分">
+					</div>
+					
+				
+					
+					<div class="form-group">
+					  <label>salary</label>
+					  <input type="text" class="form-control" name="salary" placeholder="请输入学院">
+					</div>
+					
+					
+					
+					<input type="hidden" name="id" value="0" /> 
+					
+					
+				  </form>
+				  
+			  </div>
+			  <div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				  <button type="button" class="btn btn-primary" onclick="save()">提交</button>
+			  </div>
+		  </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+<!-- bootstrap js -->
+<script src="bootstrap-3.3.5-dist/js/jquery.min.js"></script>
+<script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+<script src="iceking-utils-jquery.js"></script>
+<script src="sweetalert.min.js"></script>
+<!-- <script src="t2.js"></script> -->
+	<script>
+      jqu.loadJs('/js/ztest_list_ljf.js');
+    </script>
+</body>
+</html>

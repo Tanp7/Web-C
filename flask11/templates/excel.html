@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>学生成绩查询</title>
+</head>
+<body>
+
+<!-- 这是html的注释 -->
+{# 这是jinja2的注释 #}
+
+<form method="post" action="/excel">
+关键字：<input type="text" name="kw" value="">
+<input type="submit" value="查询">
+</form>
+<br>
+<table border="1">
+	<tr>
+		<td>学号</td>
+		<td>姓名</td>
+		<td>英语</td>
+		<td>数学</td>
+		<td>计算机</td>
+	</tr>
+	{% for x in data %}
+	<tr>
+			<td>{{x[0]}}</td>
+			<td>{{x[1]}}</td>
+			<td>{{x[2]}}</td>
+			<td>{{x[3]}}</td>
+			<td>{{x[4]}}</td>
+		</tr>
+		
+	{% endfor %}
+		
+</table>
+
+</body>
+</html>
