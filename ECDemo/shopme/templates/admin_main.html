@@ -1,0 +1,24 @@
+{# 继承base.htm 基本模板 #}
+{% extends 'admin_a_basic.html' %}
+
+{% block my_js %}
+<script>
+jqu.loadJs('/js/admin_main.js');
+//登入信息中的内容需要保存在 js变量中
+var login_id = {{login_admin['id']}};
+var login_name = '{{login_admin["name"]}}';
+var login_code = '{{login_admin["code"]}}';
+
+</script>
+{% endblock %}
+
+
+
+
+{% block my_body %}
+
+    <h2>统计汇总</h2>
+	<hr>
+	<h1>后台管理的主页，一些统计汇总信息</h1>
+
+{% endblock %}

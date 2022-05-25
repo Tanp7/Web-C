@@ -1,0 +1,57 @@
+{# 第二个模板文件，仅仅定义需要的css和js #}
+{#
+Jinja2 模板的主要语法：
+https://www.cnblogs.com/themost/p/9268318.html
+Jinja2 的基本用法:   https://www.jianshu.com/p/f04dae701361
+#}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block my_title %}ShopMe | Admin{% endblock %}</title>
+	{# 指定浏览器标题栏前面的小图标 #}
+	<link rel="shortcut icon" type="image/x-icon" href="/mythemes/pixel/plugins/images/favicon.png">
+	{# 定义需要的全局CSS文件
+		后台采用的模板为：pixel，放置在 /mythemes/pixel 文件夹下
+	#}
+	<link href="/mythemes/pixel/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/mythemes/pixel/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+	<link href="/mythemes/pixel/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+	<link href="/mythemes/pixel/plugins/bower_components/morrisjs/morris.css" rel="stylesheet">
+	<link href="/mythemes/pixel/css/animate.css" rel="stylesheet">
+	<link href="/mythemes/pixel/css/style.css" rel="stylesheet">
+	<link href="/mythemes/pixel/css/colors/default.css" id="theme" rel="stylesheet">
+	<link href="/mythemes/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	{# 网页可以增加自定义的CSS #}
+	{% block my_css %}{% endblock %}
+	
+	
+</head>
+<body>
+{# 网页的内容 #}
+
+{% block my_body %}{% endblock %}
+
+
+{# 定义需要的全局js文件，按照bootstrap惯例，脚本放置在body最后 #}
+<script src="/mythemes/pixel/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/mythemes/pixel/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/mythemes/pixel/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="/mythemes/pixel/js/jquery.slimscroll.js"></script>
+<script src="/mythemes/pixel/js/waves.js"></script>
+<script src="/mythemes/pixel/plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+<script src="/mythemes/pixel/plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+<script src="/mythemes/pixel/plugins/bower_components/raphael/raphael-min.js"></script>
+<script src="/mythemes/pixel/plugins/bower_components/morrisjs/morris.js"></script>
+<script src="/mythemes/pixel/js/custom.min.js"></script>
+<script src="/mythemes/pixel/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+<script src="/mythemes/sweetalert.min.js"></script>
+<script src="/mythemes/iceking-utils-jquery.js"></script>
+
+
+{# 网页可以增加自定义的CSS #}
+{% block my_js %}{% endblock %}
+</body>
+</html>

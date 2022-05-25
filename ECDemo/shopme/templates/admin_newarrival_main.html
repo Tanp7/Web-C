@@ -1,0 +1,143 @@
+{# 继承base.htm 基本模板 #}
+{% extends 'admin_a_basic.html' %}
+
+{% block my_js %}
+<script>
+jqu.loadJs('/js/admin_newarrival_main.js');
+//登入信息中的内容需要保存在 js变量中
+var login_id = {{login_admin['id']}};
+var login_name = '{{login_admin["name"]}}';
+var login_code = '{{login_admin["code"]}}';
+
+</script>
+{% endblock %}
+
+
+
+
+{% block my_body %}
+
+<h2>最新推荐</h2>
+<hr>
+
+
+<form class="form-inline" role="form" method="POST" action="/newarrival/" id="form_search">
+  <div class="form-group">
+    <label>商品类别：
+    <input type="text" class="form-control" name="type" placeholder="类别/标签" style="width:180px;"
+     value="{{data_modal['type']}}">
+    </label>
+  </div>
+  <div class="form-group">
+    <label>关键字：
+    <input type="text" class="form-control" name="keyword" placeholder="商品名称/标题/商标/简介" style="width:260px;"
+     value="{{data_modal['keyword']}}">
+    </label>
+  </div>
+  
+  <!-- 翻页等需要用到隐藏域 -->
+  <input type="hidden" name="page" value="{{data_modal['page']}}">
+  <input type="hidden" name="pagesize" value="{{data_modal['pagesize']}}">
+  
+  <div class="form-group">
+  <button type="button" class="btn btn-default" onclick="search()"><i class="fa fa-search"></i> 查询</button>
+  
+  </div>
+  
+</form>
+
+<!-- 数据部分用table展示 -->
+{% if data_modal['total']>0 %}
+
+<table class="table table-striped">
+	<caption>最新推荐列表. 第 {{data_modal['page']}} 页 / 共 {{data_modal['totalpage']}} 页. 总数: {{data_modal['total']}}. </caption>
+  <thead>
+    <tr>
+      <th width="55">序号</th>
+	  <th width="100">标签页</th>
+      <th width="100">商品图片</th>
+      <th width="15%">商品编号</th>
+      <th width="20%">商品名称</th>
+      <th width="20%">商品价格</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  {% for record in data_modal['rows'] %}
+    <tr>
+      <td>{{record['seqno']}}</td>
+      <td>{{record['tabloc']}}</td>
+      <td><img src="{{record.defaultimg}}" width="90" height="90"></td>
+      <td>{{record['code']}}</td>
+      <td>{{record['name']}}</td>
+      <td>
+	  <span style="font-size:20px;text-decoration:line-through;">{{record.pricesign}}{{record.priceold}}</span>
+	  &nbsp;&nbsp;
+	  <span style="font-size:20px;font-weight:bold;">{{record.pricesign}}{{record.pricenew}}</span>
+	  </td>
+      <td>
+      	<a href="javascript:;" onclick="del({{record['id']}},'{{record.name}}')"><span class="glyphicon glyphicon-remove"></span> 删除</a>&nbsp;
+      	<a href="javascript:;" onclick="setseqno({{record['id']}},{{record.seqno}},'{{record.tabloc}}','{{record.code}}','{{record.name}}')"><i class="fa fa-arrow-up"></i> 排序</a>
+      </td>
+    </tr>
+  {% endfor %}
+   
+  </tbody>
+</table>
+
+<!-- 翻页，靠右，必须有页码的时候 -->
+	<ul class="pagination">
+	    <li><a href="javascript:;" onclick="changePage(1)" data-toggle="tooltip" title="首页">&laquo;</a></li>
+		{% for pageno in data_modal['pagenumbers'] %}
+	    <li {% if pageno==data_modal['page'] %} class="active" {% endif %}><a href="javascript:;" onclick="changePage({{pageno}})">{{pageno}}</a></li>
+	    {% endfor %}
+	    <li><a href="javascript:;" onclick="changePage({{data_modal['totalpage']}})" data-toggle="tooltip" title="末页 共 {{data_modal['totalpage']}} 页">&raquo;</a></li>
+	</ul>
+
+
+{% else %}
+	<h3>查询无结果.</h3>
+{% endif %}
+
+<!-- 模态框（Modal）设置排序号 -->
+<div class="modal fade" id="modal_seqno" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >调整排序号与标签页</h4>
+            </div>
+            <div class="modal-body" align="center">
+            <form class="form-horizontal" role="form" id="form1" onsubmit="return false;">
+				<label id="label_seqno">编号：，名称：</label>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">排序号</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="seqno">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">标签页</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="tabloc">
+					</div>
+				</div>
+				
+				<input type="hidden" name="id" value="0">
+			
+			</form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+                <button type="button" class="btn btn-primary" onclick="save_seqno()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+{% endblock %}

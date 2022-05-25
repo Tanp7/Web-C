@@ -1,0 +1,118 @@
+{#
+
+悬浮在左上角的样式选择器
+
+#}
+
+<div id="styleswitcher">
+
+			<button class="icon_btn middle_btn open_styleswitcher"><i class="icon-cog-alt"></i></button>
+
+			<div class="dropdown stsw">
+
+				<div class="animated_item">
+
+					<h3 class="title">Style Switcher</h3>
+
+				</div>
+
+				<div class="animated_item">
+
+					Layout type
+					<div class="sw_section switch">
+
+						<button class="theme_button active" data-layout="wide">Wide</button>
+						<button class="theme_button" data-layout="boxed">Boxed</button>
+
+					</div>
+
+					Header style
+					<div class="sw_section">
+
+						<div class="custom_select" id="change_header_type">
+
+							<select>
+
+								<option value="Header 1">Header 1</option>
+								<option value="Header 2">Header 2</option>
+								<option value="Header 3">Header 3</option>
+								<option value="Header 4">Header 4</option>
+								<option value="Header 5">Header 5</option>
+								<option value="Header 6">Header 6</option>
+
+							</select>
+
+						</div>
+
+					</div>
+
+					Footer style
+					<div class="sw_section">
+
+						<div class="custom_select" id="change_footer_type">
+
+							<select>
+
+								<option value="Footer 1">Footer 1</option>
+								<option value="Footer 2">Footer 2</option>
+								<option value="Footer 3">Footer 3</option>
+								<option value="Footer 4">Footer 4</option>
+								<option value="Footer 5">Footer 5</option>
+								<option value="Footer 6">Footer 6</option>
+
+							</select>
+
+						</div>
+
+					</div>
+
+					Background for boxed layout
+					<div class="sw_section">
+
+						<div class="custom_select" id="bg_change_select">
+
+							<select>
+
+								<option value="Color">Color</option>
+								<option value="Image">Image</option>
+
+							</select>
+
+						</div>
+
+					</div>
+					<div class="sw_section bg_color">
+
+						<div class="title">Background color:</div> 
+
+						<div class="wrapper">
+
+							<button class="change_bg" id="change_bg_color"></button>
+
+						</div>
+
+					</div>
+					<div class="sw_section bg_images">
+
+						<div class="title">Background image:</div> 
+
+						<div class="wrapper">
+
+							<button class="change_bg" data-src="/mythemes/shopme/images/image_bg_1.jpg"></button>
+							<button class="change_bg" data-src="/mythemes/shopme/images/image_bg_2.jpg"></button>
+
+						</div>
+
+					</div>
+
+					<div class="sw_section">
+
+						<button id="sw_reset" class="button_grey middle_btn">Reset</button>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>

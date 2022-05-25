@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="fa fa-bars"></i></a>
+                <div class="top-left-part"><a class="logo" href="/admin"><b><img src="/mythemes/pixel/plugins/images/pixeladmin-logo.png" alt="home" /></b><span class="hidden-xs"><img src="/mythemes/pixel/plugins/images/pixeladmin-text.png" alt="home" /></span></a>
+				</div>
+				
+                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
+                    <li>
+                        <form role="search" class="app-search hidden-xs">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a>
+                        </form>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <a class="profile-pic" href="#"> <img src="/mythemes/pixel/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">{{login_admin['name']}}</b> </a>
+                    </li>
+					<li>
+                        <a class="profile-pic" href="javascript:;" onclick="logout()"><i class="fa fa-power-off fa-lg"></i> <b class="hidden-xs">退出</b> </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </nav>
+		
+<script>
+//退出方法，每张页面的上方导航栏都需要使用
+var logout = function(){
+	swal({
+		title:login_name,
+		text:'确实要退出吗？',
+		icon:'info',
+		closeOnClickOutside:true,
+		closeOnEsc:true,
+		buttons:['取消','确定']
+	}).then(function(value){
+		if(value==null)
+			return;
+		jqu.loadJson('/admin/logout.do',function(result){
+			location.href='/admin';
+		});
+	});
+};
+
+</script>

@@ -1,0 +1,210 @@
+<!--==================================
+		Quick view modal window
+======================================-->
+
+<div id="quick_view" class="modal_window">
+
+	<button class="close arcticmodal-close"></button>
+
+	<div class="clearfix">
+
+		<!-- - - - - - - - - - - - - - Product image column - - - - - - - - - - - - - - - - -->
+
+		<div class="single_product">
+
+			<!-- - - - - - - - - - - - - - Image preview container - - - - - - - - - - - - - - - - -->
+
+			<div class="image_preview_container" id="qv_preview">
+				{# 第一张图片作为默认图片 #}
+				<img id="img_zoom" data-zoom-image="{{data_modal['imgs'][0].imglarge}}" src="{{data_modal['imgs'][0].imgnormal}}" style="width:360px;height:360px;" alt="">
+				
+			</div><!--/ .image_preview_container-->
+
+			<!-- - - - - - - - - - - - - - End of image preview container - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Prodcut thumbs carousel - - - - - - - - - - - - - - - - -->
+			
+			<div class="product_preview" data-output="#qv_preview">
+
+				<div class="owl_carousel" id="thumbnails">
+				
+					{# 循环显示小图片 #}
+					{% for img in data_modal['imgs'] %}
+					<img src="{{img.imgthumb}}" data-large-image="{{img.imgnormal}}" style="width:80px;height:80px;" alt="">
+					{% endfor %}
+												
+
+				</div><!--/ .owl-carousel-->
+
+			</div><!--/ .product_preview-->
+			
+			<!-- - - - - - - - - - - - - - End of prodcut thumbs carousel - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Share - - - - - - - - - - - - - - - - -->
+			
+			<div class="v_centered">
+
+				<span class="title">Share this:</span>
+
+				<div class="addthis_widget_container">
+					<!-- AddThis Button BEGIN -->
+					<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+					<a class="addthis_button_preferred_1"></a>
+					<a class="addthis_button_preferred_2"></a>
+					<a class="addthis_button_preferred_3"></a>
+					<a class="addthis_button_preferred_4"></a>
+					<a class="addthis_button_compact"></a>
+					<a class="addthis_counter addthis_bubble_style"></a>
+					</div>
+					<!-- AddThis Button END -->
+				</div>
+				
+			</div>
+			
+			<!-- - - - - - - - - - - - - - End of share - - - - - - - - - - - - - - - - -->
+
+		</div>
+
+		<!-- - - - - - - - - - - - - - End of product image column - - - - - - - - - - - - - - - - -->
+
+		<!-- - - - - - - - - - - - - - Product description column - - - - - - - - - - - - - - - - -->
+
+		<div class="single_product_description">
+
+			<h3><a href="#">{{data_modal.title}}</a></h3>
+
+			<div class="description_section v_centered">
+
+				<!-- - - - - - - - - - - - - - Product rating - - - - - - - - - - - - - - - - -->
+			
+				<ul class="rating">
+
+					<li class="active"></li>
+					<li class="active"></li>
+					<li class="active"></li>
+					<li></li>
+					<li></li>
+
+				</ul>
+					
+				<!-- - - - - - - - - - - - - - End of product rating - - - - - - - - - - - - - - - - -->
+
+				<!-- - - - - - - - - - - - - - Reviews menu - - - - - - - - - - - - - - - - -->
+
+				<ul class="topbar">
+
+					<li><a href="#">3 Review(s)</a></li>
+					<li><a href="#">Add Your Review</a></li>
+
+				</ul>
+
+				<!-- - - - - - - - - - - - - - End of reviews menu - - - - - - - - - - - - - - - - -->
+
+			</div>
+
+			<div class="description_section">
+
+				<table class="product_info">
+
+					<tbody>
+
+						<tr>
+
+							<td>品牌/制造厂: </td>
+							<td><a href="#">{{data_modal.brand}} / {{data_modal.manufacturer}}</a></td>
+
+						</tr>
+
+						<tr>
+
+							<td>库存量: </td>
+							<td>{{data_modal.stock}}</td>
+
+						</tr>
+
+						<tr>
+
+							<td>商品编号: </td>
+							<td>{{data_modal.code}}</td>
+
+						</tr>
+
+					</tbody>
+
+				</table>
+
+			</div>
+
+			<hr>
+
+			<div class="description_section">
+
+				<p>{{data_modal.markshort}}</p>
+
+			</div>
+
+			<hr>
+
+			<p class="product_price"><s>{{data_modal.pricesign}}{{data_modal.priceold}}</s> <b class="theme_color">{{data_modal.pricesign}}{{data_modal.pricenew}}</b></p>
+
+			<!-- - - - - - - - - - - - - - Product size - - - - - - - - - - - - - - - - -->
+
+			<div class="description_section_2 v_centered">
+				
+				<span class="title">尺寸:</span>
+
+				
+				<div class="btn-group btn-group-justified">
+				{% for size in data_modal.sizearray %}
+				  <a href="javascript:;" class="btn btn-primary">{{size}}</a>
+				{% endfor %}
+				</div>
+
+
+			</div>
+
+			<!-- - - - - - - - - - - - - - End of product size - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Quantity - - - - - - - - - - - - - - - - -->
+
+			<div class="description_section_2 v_centered">
+				
+				<span class="title">Qty:</span>
+
+				<div class="qty min clearfix">
+
+					<button class="theme_button" type="button" data-direction="minus">&#45;</button>
+					<input type="text" name="" value="1">
+					<button class="theme_button" type="button" data-direction="plus">&#43;</button>
+
+				</div>
+
+			</div>
+
+			<!-- - - - - - - - - - - - - - End of quantity - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Product actions - - - - - - - - - - - - - - - - -->
+
+			<div class="buttons_row">
+
+				<button class="button_blue middle_btn">Add to Cart</button>
+
+				<button class="button_dark_grey def_icon_btn middle_btn add_to_wishlist tooltip_container"><span class="tooltip top">Add to Wishlist</span></button>
+
+				<button class="button_dark_grey def_icon_btn middle_btn add_to_compare tooltip_container"><span class="tooltip top">Add to Compare</span></button>
+
+			</div>
+
+			<!-- - - - - - - - - - - - - - End of product actions - - - - - - - - - - - - - - - - -->
+
+		</div>
+
+		<!-- - - - - - - - - - - - - - End of product description column - - - - - - - - - - - - - - - - -->
+
+	</div>
+
+</div>
+
+<!--==================================
+		End quick view modal window
+====================================== -->

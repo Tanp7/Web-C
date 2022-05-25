@@ -1,0 +1,168 @@
+﻿<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Basic page needs
+		============================================ -->
+		<title>{% block my_title %}ShopMe | Home{% endblock %}</title>
+		<meta charset="utf-8">
+		<meta name="author" content="">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+
+		<!-- Mobile specific metas
+		============================================ -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<!-- Favicon
+		============================================ -->
+		<link rel="shortcut icon" type="image/x-icon" href="/mythemes/fav_icon.ico">
+
+		<!-- Google web fonts
+		============================================ -->
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,300,300italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+		<!-- Libs CSS
+		============================================ -->
+		<link rel="stylesheet" href="/mythemes/shopme/css/animate.css">
+		<link rel="stylesheet" href="/mythemes/shopme/css/fontello.css">
+		<link rel="stylesheet" href="/mythemes/shopme/css/bootstrap.min.css">
+		
+		<!-- Theme CSS
+		============================================ -->
+		<link rel="stylesheet" href="/mythemes/shopme/js/layerslider6100/css/layerslider.css">
+		<link rel="stylesheet" href="/mythemes/shopme/js/owlcarousel/owl.carousel.css">
+		<link rel="stylesheet" href="/mythemes/shopme/js/colorpicker/colorpicker.css">
+		<link rel="stylesheet" href="/mythemes/shopme/js/arcticmodal/jquery.arcticmodal.css">
+		<link rel="stylesheet" href="/mythemes/shopme/css/style.css">
+		
+		<!-- font-awesome-4.7.0 -->
+		<link href="/mythemes/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		
+		{# 网页可以增加自定义的CSS #}
+		{% block my_css %}{% endblock %}
+
+		<!-- JS Libs
+		============================================ -->
+		<script src="/mythemes/shopme/js/modernizr.js"></script>
+		<script src="/mythemes/shopme/js/jquery-2.1.1.min.js"></script>
+		<script src="/mythemes/shopme/js/queryloader2.min.js"></script>
+		
+		<script>
+
+			$(document).ready(function(){
+
+				$("body").queryLoader2({
+	    			barHeight : 4,
+	    			backgroundColor : '#fff',
+	    			barColor : '#49b9c6',
+	    			minimumTime : 2000,
+	    			onComplete : function(){
+
+						
+	    				if($.arcticmodal && $('body').hasClass('promo_popup')){
+							$.arcticmodal({
+								url : "modals/promo.html"
+							});
+						}
+
+	    			}
+	    		});
+
+			});
+
+		</script>
+
+		
+	</head>
+	<body class="front_page">
+		<!-- <div id="fb-root"></div> -->
+
+
+		<!-- - - - - - - - - - - - - - Styleswitcher - - - - - - - - - - - - - - - - -->
+
+		<!-- { include 'shopme_style_switcher.html' } -->
+
+		<!-- - - - - - - - - - - - - - end Styleswitcher - - - - - - - - - - - - - - - - -->
+
+		
+
+		<!-- - - - - - - - - - - - - - Main Wrapper - - - - - - - - - - - - - - - - -->
+
+		<div class="wide_layout">
+
+			<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
+
+			{% include 'shopme_header.html' %}
+			
+			<!-- - - - - - - - - - - - - - End Header - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Layer slider - - - - - - - - - - - - - - - - -->
+			{% if not hide_layerslider %}
+			
+			{% include 'shopme_layerslider.html' %}
+			
+			{% else %}
+			
+			<div class="layerslider">
+			</div>
+				
+			{% endif %}
+
+			<!-- - - - - - - - - - - - - - End of layer slider - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Page Wrapper - - - - - - - - - - - - - - - - -->
+
+			<div class="page_wrapper">
+			<!-- 每张网页需要实现的部分 -->
+			{% block my_body %}{% endblock %}
+
+			</div><!--/ .page_wrapper-->
+			
+			<!-- - - - - - - - - - - - - - End Page Wrapper - - - - - - - - - - - - - - - - -->
+
+			<!-- - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->
+			
+			{% include 'shopme_footer.html' %}
+			
+			<!-- - - - - - - - - - - - - - End Footer - - - - - - - - - - - - - - - - -->
+
+		</div><!--/ [layout]-->
+		
+		<!-- - - - - - - - - - - - - - End Main Wrapper - - - - - - - - - - - - - - - - -->
+
+		<!-- - - - - - - - - - - - - - Social feeds - - - - - - - - - - - - - - - - -->
+		{% if not hide_social_feeds %}
+		{% include 'shopme_social_feeds.html' %}
+		{% endif %}
+
+		<!-- - - - - - - - - - - - - - End Social feeds - - - - - - - - - - - - - - - - -->
+		
+		<!-- Include Libs & Plugins
+		============================================ -->
+		<script src="/mythemes/shopme/js/layerslider6100/js/greensock.js"></script>
+		<script src="/mythemes/shopme/js/layerslider6100/js/layerslider.transitions.js"></script>
+		<script src="/mythemes/shopme/js/layerslider6100/js/layerslider.kreaturamedia.jquery.js"></script>
+		<script src="/mythemes/shopme/js/jquery.appear.js"></script>
+		<script src="/mythemes/shopme/js/owlcarousel/owl.carousel.min.js"></script>
+		<script src="/mythemes/shopme/js/jquery.countdown.plugin.min.js"></script>
+		<script src="/mythemes/shopme/js/jquery.countdown.min.js"></script>
+		<script src="/mythemes/shopme/js/arcticmodal/jquery.arcticmodal.js"></script>
+		<!-- <script src="twitter/jquery.tweet.min.js"></script> -->
+		<script src="/mythemes/shopme/js/colorpicker/colorpicker.js"></script>
+		<script src="/mythemes/shopme/js/retina.min.js"></script>
+		<!-- <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js"></script> -->
+
+		<!-- Theme files
+		============================================ -->
+		<!-- <script src="/mythemes/shopme/js/theme.styleswitcher.js"></script> -->
+		<script src="/mythemes/shopme/js/theme.plugins.js"></script>
+		<script src="/mythemes/shopme/js/theme.core.js"></script>
+		
+		
+		<script src="/mythemes/sweetalert.min.js"></script>
+		<script src="/mythemes/iceking-utils-jquery.js"></script>
+		{# 网页可以增加自定义的CSS #}
+		{% block my_js %}{% endblock %}
+		
+	</body>
+</html>

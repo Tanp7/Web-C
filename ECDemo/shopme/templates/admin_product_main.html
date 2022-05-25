@@ -1,0 +1,445 @@
+{# 继承base.htm 基本模板 #}
+{% extends 'admin_a_basic.html' %}
+
+{% block my_css %}
+<style>
+#form1_table td{
+	font-weight:bold;
+}
+
+.my-small-pic{
+	width:70px;
+	display:inline-block;
+	margin-left:10px;
+	margin-top:10px;
+}
+
+</style>
+
+{% endblock %}
+
+{% block my_js %}
+{# 图片上传需要用到 #}
+<script	src="/mythemes/jquery.form.js"></script>
+
+<script>
+jqu.loadJs('/js/admin_product_main.js');
+//登入信息中的内容需要保存在 js变量中
+var login_id = {{login_admin['id']}};
+var login_name = '{{login_admin["name"]}}';
+var login_code = '{{login_admin["code"]}}';
+
+</script>
+{% endblock %}
+
+
+{% block my_body %}
+
+<h2>商品信息列表</h2>
+<hr>
+
+<form class="form-inline" role="form" method="POST" action="/product/" id="form_search">
+  <div class="form-group">
+    <label>商品类别：
+    <input type="text" class="form-control" name="type" placeholder="类别/标签" style="width:180px;"
+     value="{{data_modal['type']}}">
+    </label>
+  </div>
+  <div class="form-group">
+    <label>关键字：
+    <input type="text" class="form-control" name="keyword" placeholder="商品名称/标题/商标/简介" style="width:260px;"
+     value="{{data_modal['keyword']}}">
+    </label>
+  </div>
+  
+  <!-- 翻页等需要用到隐藏域 -->
+  <input type="hidden" name="page" value="{{data_modal['page']}}">
+  <input type="hidden" name="pagesize" value="{{data_modal['pagesize']}}">
+  
+  <div class="form-group">
+  <button type="button" class="btn btn-default" onclick="search()"><i class="fa fa-search"></i> 查询</button>
+  <button type="button" class="btn btn-primary" onclick="presave(0)"><i class="fa fa-plus"></i> 新增商品信息</button>
+  </div>
+  
+</form>
+
+{# 商品信息的字段比较多，采用 panel形式进行展示 #}
+{% if data_modal['total']>0 %}
+
+<p>商品信息列表. 第 {{data_modal['page']}} 页 / 共 {{data_modal['totalpage']}} 页. 总数: {{data_modal['total']}}. </p>
+
+{# 模板的标题色彩在循环中进行变化 #}
+{% set panel_classes=['primary','success','info','warning','danger','default'] %}
+
+{% for record in data_modal['rows'] %}
+{# 每个商品采用一个panel，根据循环索引号 loop.index0 的余数来获得panel-class #}
+{% set panel_idx=(loop.index0 % (panel_classes|length)) %}
+<div class="panel panel-{{panel_classes[panel_idx]}}">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <small>编号：</small><span style="font-size:20px;">{{record.code}}</span>，<small>名称：</small><span style="font-size:20px;">{{record.name}}</span>，<small>商标：</small>{{record.brand}}，<small>制造商：</small>{{record.manufacturer}}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <table border="0" width="100%">
+		<tr>
+			<td width="200" align="center" valign="top">
+			<img id="defaultimg_{{record.id}}" src="{{record.defaultimg}}" width="180" height="180">
+			</td>
+			<td valign="top">
+				标题：{{record.title}}
+				<br>原价：<span style="font-size:20px;text-decoration:line-through;">{{record.pricesign}}{{record.priceold}}</span>，现价：<span style="font-size:20px;font-weight:bold;">{{record.pricesign}}{{record.pricenew}}</span>，库存量：<span style="font-size:20px;">{{record.stock}}</span>
+				<hr>
+				{# 简介中可能包含换行符“\n”，需要替换为<br>, safe表示不转义，否则会变成字符的<br> #}
+				{{record.markshort | replace('\n','<br>') | safe}}
+				<hr>
+				尺寸：{{record.size}}
+				<br>标签：{{record.tags}}
+				<br>分类：{{record.type1}} - {{record.type2}}
+				<br>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default" onclick="presave({{record.id}})"><i class="fa fa-edit"></i> 编辑</button>
+					
+					<button type="button" class="btn btn-default" onclick="addImg({{record.id}})"><i class="fa fa-image"></i> 添加图片</button>
+					
+					<button type="button" class="btn btn-default" onclick="add_to_dayspecial({{record.id}},'{{record.defaultimg}}')"><i class="fa fa-plus"></i> 加入“每日特价”</button>
+					
+					<button type="button" class="btn btn-default" onclick="add_to_newarrival({{record.id}},'{{record.defaultimg}}')"><i class="fa fa-plus"></i> 加入“新品推荐”</button>
+					
+					<button type="button" class="btn btn-default" onclick="del({{record.id}},'{{record.name}}')"><i class="fa fa-remove"></i> 删除</button>
+					
+				</div>
+			</td>
+		</tr>
+		</table>
+		{# 多个小图片的列表 #}
+		{% if record.imgs|length > 0 %}
+		<div id="div_imgthumb_{{record.id}}">
+			{% for img in record.imgs %}
+			<div class="my-small-pic" align="center">
+				<a href="javascript:;" onclick="setnormalimg('{{img.imgnormal}}',{{img.proid}})"><img src="{{img.imgthumb}}" style="width:60px;height:60px;"></a>
+				<br>
+				<div>
+				<a href="javascript:;" onclick="setimgseqno({{img.id}},{{img.seqno}},'{{img.imgnormal}}')" data-toggle="tooltip" data-placement="bottom" title="排序"><i class="fa fa-edit"></i></a>
+				<a href="javascript:;" onclick="viewlargeimg('{{img.imglarge}}')" data-toggle="tooltip" data-placement="bottom" title="查看大图"><i class="fa fa-image"></i></a>
+				<a href="javascript:;" onclick="deleteimg({{img.id}})" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-remove"></i></a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+    </div>
+</div>
+
+{% endfor %}
+
+<!-- 翻页，靠右，必须有页码的时候 -->
+	<ul class="pagination">
+	    <li><a href="javascript:;" onclick="changePage(1)" data-toggle="tooltip" title="首页">&laquo;</a></li>
+		{% for pageno in data_modal['pagenumbers'] %}
+	    <li {% if pageno==data_modal['page'] %} class="active" {% endif %}><a href="javascript:;" onclick="changePage({{pageno}})">{{pageno}}</a></li>
+	    {% endfor %}
+	    <li><a href="javascript:;" onclick="changePage({{data_modal['totalpage']}})" data-toggle="tooltip" title="末页 共 {{data_modal['totalpage']}} 页">&raquo;</a></li>
+	</ul>
+
+{% else %}
+	<h3>查询无结果.</h3>
+{% endif %}
+
+
+<!-- 模态框（Modal）新增，修改 presave -->
+<div class="modal fade" id="modal_am" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >新增/修改</h4>
+            </div>
+            <div class="modal-body" style="overflow-y:auto; overflow-x:hidden; height:500px;">
+            
+            <form class="form-horizontal" role="form" id="form1" onsubmit="return false;">
+	            <!-- 商品字段较多，使用table布局 -->
+				<table id="form1_table" border="0" width="100%" style="border-collapse:separate; border-spacing:0px 10px;">
+				<tr>
+					<td width="10%" align="right">名称：</td>
+					<td width="40%"><input type="text" class="form-control" name="name"></td>
+					<td width="10%" align="right">编号：</td>
+					<td><input type="text" class="form-control" name="code"></td>
+				</tr>
+				<tr>
+					<td align="right">商标/品牌：</td>
+					<td><input type="text" class="form-control" name="brand"></td>
+					<td align="right">制造厂商：</td>
+					<td><input type="text" class="form-control" name="manufacturer"></td>
+				</tr>
+				<tr>
+					<td align="right">标题：</td>
+					<td colspan="3"><input type="text" class="form-control" name="title"></td>
+				</tr>
+				<tr>
+					<td align="right">简介：</td>
+					<td colspan="3"><textarea class="form-control" name="markshort" style="height:80px;resize:none;"></textarea></td>
+				</tr>
+				<tr>
+					<td align="center" colspan="4" style="color:red;font-weight:normal;">“详情”与“参数”允许以 html: 或者 url: 开头</td>
+				</tr>
+				<tr>
+					<td align="right">详情：</td>
+					<td colspan="3"><textarea class="form-control" name="markdetail" style="height:120px;resize:none;"></textarea></td>
+				</tr>
+				<tr>
+					<td align="right">参数：</td>
+					<td colspan="3"><textarea class="form-control" name="specification" style="height:120px;resize:none;"></textarea></td>
+				</tr>
+				<tr>
+					<td align="right">原价：</td>
+					<td><input type="text" class="form-control" name="priceold"></td>
+					<td align="right">现价：</td>
+					<td><input type="text" class="form-control" name="pricenew"></td>
+				</tr>
+				<tr>
+					<td align="right">价格单位：</td>
+					<td>
+						<select name="priceunit" class="form-control">
+							<option value="CNY" selected="selected">￥ - 人民币</option>
+							<option value="USD">$ - 美元</option>
+						</select>
+					</td>
+					<td align="right">库存量：</td>
+					<td><input type="text" class="form-control" name="stock"></td>
+				</tr>
+				<tr>
+					<td align="center" colspan="4" style="color:red;font-weight:normal;">“尺寸”与“标签”如果有多个，请使用“英文逗号,”间隔</td>
+				</tr>
+				<tr>
+					<td align="right">尺寸：</td>
+					<td><input type="text" class="form-control" name="size"></td>
+					<td align="right">标签：</td>
+					<td><input type="text" class="form-control" name="tags"></td>
+				</tr>
+				<tr>
+					<td align="right">一级分类：</td>
+					<td><input type="text" class="form-control" name="type1"></td>
+					<td align="right">二级分类：</td>
+					<td><input type="text" class="form-control" name="type2"></td>
+				</tr>
+				
+				
+				</table>
+				
+				
+				<input type="hidden" name="id" value="0">
+            </form>
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+                <button type="button" class="btn btn-primary" onclick="save()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- 模态框（Modal）新增图片，addimg -->
+<div class="modal fade" id="modal_img" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >添加商品图片</h4>
+            </div>
+            <div class="modal-body">
+            {# 文件上传的表单，必须有：method="post" enctype="multipart/form-data" #}
+            <form class="form-horizontal" role="form" id="form2" method="post" enctype="multipart/form-data" onsubmit="return false;">
+				<label style="color:red;">正常图片建议尺寸：360 * 360，大小不超过 500K</label>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">正常图片</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" name="imgnormal">
+					</div>
+				</div>
+				<label style="color:red;">小图片建议尺寸：80 * 80，大小不超过 100K</label>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">小图片</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" name="imgthumb">
+					</div>
+				</div>
+				<label style="color:red;">大图片建议尺寸：800 * 800，大小不超过 1M</label>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">大图片</label>
+					<div class="col-sm-10">
+						<input type="file" class="form-control" name="imglarge">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">排序号</label>
+					<div class="col-sm-10">
+						<select name="seqno" class="form-control">
+							<option value="1" selected="selected">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+						</select>
+					</div>
+				</div>
+				<input type="hidden" name="proid" value="0">
+            </form>
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+                <button type="button" class="btn btn-primary" onclick="saveImg()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- 模态框（Modal）查看大图片 -->
+<div class="modal fade" id="modal_view_large" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >商品大图片</h4>
+            </div>
+            <div class="modal-body" align="center">
+            <img src="" id="img_large" style="width:800px;height:800px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- 模态框（Modal）更改小图片的排序号 -->
+<div class="modal fade" id="modal_seqno" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >商品图片排序号</h4>
+            </div>
+            <div class="modal-body" align="center">
+            <form class="form-horizontal" role="form" id="form3" onsubmit="return false;">
+				<div align="center">
+					<img src="" id="img_seqno_normal" style="width:360px;height:360px;">
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">排序号</label>
+					<div class="col-sm-10">
+						<select name="seqno" class="form-control">
+							<option value="1" selected="selected">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+						</select>
+					</div>
+				</div>
+				
+				<input type="hidden" name="id" value="0">
+			
+			</form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+                <button type="button" class="btn btn-primary" onclick="saveimgseqno()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- 模态框（Modal）加入每日特价，设置排序号 -->
+<div class="modal fade" id="modal_add_dayspecial" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >商品加入“每日特价”</h4>
+            </div>
+            <div class="modal-body" align="center">
+            <form class="form-horizontal" role="form" id="form4" onsubmit="return false;">
+				<div align="center">
+					<img src="" id="img_dayspecial" style="width:360px;height:360px;">
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">排序号</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="seqno">
+					</div>
+				</div>
+				
+				<input type="hidden" name="proid" value="0">
+			
+			</form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+                <button type="button" class="btn btn-primary" onclick="save_dayspecial()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<!-- 模态框（Modal）加入新品推荐，设置排序号和所在位置 -->
+<div class="modal fade" id="modal_add_newarrival" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >商品加入“新品推荐”</h4>
+            </div>
+            <div class="modal-body" align="center">
+            <form class="form-horizontal" role="form" id="form5" onsubmit="return false;">
+				<div align="center">
+					<img src="" id="img_newarrival" style="width:360px;height:360px;">
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">排序号</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="seqno">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">标签卡位置</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="tabloc">
+					</div>
+				</div>
+				
+				<input type="hidden" name="proid" value="0">
+			
+			</form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+                <button type="button" class="btn btn-primary" onclick="save_newarrival()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+{% endblock %}

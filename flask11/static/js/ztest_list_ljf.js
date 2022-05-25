@@ -17,7 +17,6 @@ var search = function(){
 //----zzh------
 //-------------
 
-
 var remove = function(id) {
 	if(!confirm('确实要删除该记录吗？'))
 		return;
