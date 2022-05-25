@@ -14,6 +14,7 @@ from .main_ljf import main_ljf
 from .bp_product import product
 from .bp_dayspecial import dayspecial
 from .bp_newarrival import newarrival
+from .idol import idol
 # 引入数据库操作模块中的数据库初始化
 from .db_oper import init_database
 
@@ -64,6 +65,7 @@ def create_app():
 	app.register_blueprint(blueprint=product,url_prefix='/product')
 	app.register_blueprint(blueprint=dayspecial,url_prefix='/dayspecial')
 	app.register_blueprint(blueprint=newarrival,url_prefix='/newarrival')
+	app.register_blueprint(blueprint=idol,url_prefix='/idol')
 	
 	#为了使用 session，必须设置密钥
 	app.secret_key = '\xaf\xdb\x8dS\xf6s\xa8\x93-t\xf6\x989K.\xcd>;R\n\x81\xfdP\xb0'
