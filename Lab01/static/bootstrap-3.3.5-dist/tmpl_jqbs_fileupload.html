@@ -1,0 +1,39 @@
+<!-- 文件上传的弹出模板 -->
+
+<!-- 模态框（Modal） alert -->
+<div class="modal fade" id="jqbs_tmpl_modal_fileupload" tabindex="-1"
+	role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title">文件上传</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="jqbs_tmpl_modal_fileupload_form1" enctype="multipart/form-data" method="post">
+					<label class="text-danger" id="jqbs_tmpl_modal_errorinfo" name="errorinfo">&nbsp;</label>
+					<input type="hidden" name="cls" value="FilUploadCtrl" />
+					<input type="hidden" name="mtd" value="upload" />
+					<div class="form-group">
+							<label for="fileupload" class="col-sm-2 control-label">文件选择</label>
+							<div class="col-sm-10">
+								<input type="file" class="form-control" id="jqbs_tmpl_modal_fileupload" name="fileupload" />
+							</div>
+					</div>
+					<div class="form-group">
+							<label for="filemark" class="col-sm-2 control-label">文件描述</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="jqbs_tmpl_modal_filemark" name="filemark"
+									placeholder="请输入文件的描述信息，可选" />
+							</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="jqbs_tmpl_modal_fileupload_btn_submit" type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> 提交</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-off"></span> 关闭</button>
+			</div>
+		</div>
+	</div>
+	</div>
