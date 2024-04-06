@@ -46,7 +46,7 @@ def f1():
 	'''
 	print("{:.2f}".format(3.1415926))
 	print("{} {}".format("hello", "world"))
-	
+
 	for i in range(10):
 		html += '<p style="font-size:20px;color:red;">第一段</p>'
 		
